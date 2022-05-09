@@ -38,7 +38,6 @@ export default {
             termWeb.style.height = (document.body.clientHeight - 102) + 'px'
             const sshReq = this.$store.getters.sshReq
             this.close()
-            const prefix = process.env.NODE_ENV === 'production' ? '' : '/ws'
             const fitAddon = new FitAddon()
             this.term = new Terminal()
             this.term.loadAddon(fitAddon)
@@ -64,7 +63,7 @@ export default {
                 closeTip = 'Connection timed out!'
             }
             // open websocket
-            this.ws = new WebSocket(`${(location.protocol === 'http:' ? 'ws' : 'wss')}://${location.host}${prefix}/term?sshInfo=${sshReq}&rows=${this.term.rows}&cols=${this.term.cols}&closeTip=${closeTip}`)
+            this.ws = new WebSocket(`${(location.protocol === 'http:' ? 'ws' : 'wss')}://${location.host}${location.pathname}term?sshInfo=${sshReq}&rows=${this.term.rows}&cols=${this.term.cols}&closeTip=${closeTip}`)
             this.ws.onopen = () => {
                 console.log(Date(), 'onopen')
                 self.connected()
@@ -138,10 +137,12 @@ export default {
         },
         async connected() {
             const sshInfo = this.$store.state.sshInfo
+            // sshInfo.host = '127.0.0.1'
+            // sshInfo.port = '22'
             // 深度拷贝对象
             this.ssh = Object.assign({}, sshInfo)
             // 校验ssh连接信息是否正确
-            const result = await checkSSH(this.$store.getters.sshReq)
+            const result = await checkSSH(`${location.href}`, this.$store.getters.sshReq)
             if (result.Msg !== 'success') {
                 return
             } else {

@@ -1,4 +1,4 @@
 import request from '@/utils/request'
-export function checkSSH(sshInfo) {
-    return request.get(`/check?sshInfo=${sshInfo}`)
+export function checkSSH(path, sshInfo) {
+    return request.get(`${path}check?sshInfo=${sshInfo}`)
 }

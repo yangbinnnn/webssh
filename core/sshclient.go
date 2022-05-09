@@ -4,13 +4,14 @@ import (
 	"encoding/base64"
 	"encoding/json"
 	"fmt"
-	"github.com/gorilla/websocket"
-	"golang.org/x/crypto/ssh"
 	"log"
 	"net"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/gorilla/websocket"
+	"golang.org/x/crypto/ssh"
 )
 
 // DecodedMsgToSSHClient 字符串信息解析为ssh客户端
@@ -63,6 +64,8 @@ func (sclient *SSHClient) GenerateClient() error {
 		},
 	}
 	addr = fmt.Sprintf("%s:%d", sclient.IPAddress, sclient.Port)
+	// addr = "127.0.0.1:22"
+	fmt.Println(addr)
 	if client, err = ssh.Dial("tcp", addr, clientConfig); err != nil {
 		return err
 	}

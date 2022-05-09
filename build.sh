@@ -36,26 +36,26 @@ GO_VERSION=`go version|awk '{print $3,$4}'`
 GIT_VERSION=`git rev-parse HEAD`
 LDFLAGS="-w -s -X 'main.version=$VERSION' -X 'main.buildDate=$NOW' -X 'main.goVersion=$GO_VERSION' -X 'main.gitVersion=$GIT_VERSION'"
 
-GOOS=windows GOARCH=amd64 go build -ldflags "$LDFLAGS" -o result/webssh_windows_amd64.exe .
-GOOS=windows GOARCH=386 go build -ldflags "$LDFLAGS" -o result/webssh_windows_386.exe .
+# GOOS=windows GOARCH=amd64 go build -ldflags "$LDFLAGS" -o result/webssh_windows_amd64.exe .
+# GOOS=windows GOARCH=386 go build -ldflags "$LDFLAGS" -o result/webssh_windows_386.exe .
 GOOS=linux GOARCH=amd64 go build -ldflags "$LDFLAGS" -o result/webssh_linux_amd64 .
-GOOS=linux GOARCH=arm64 go build -ldflags "$LDFLAGS" -o result/webssh_linux_arm64 .
-GOOS=darwin GOARCH=amd64 go build -ldflags "$LDFLAGS" -o result/webssh_darwin_amd64 .
-GOOS=darwin GOARCH=arm64 go build -ldflags "$LDFLAGS" -o result/webssh_darwin_arm64 .
+# GOOS=linux GOARCH=arm64 go build -ldflags "$LDFLAGS" -o result/webssh_linux_arm64 .
+# GOOS=darwin GOARCH=amd64 go build -ldflags "$LDFLAGS" -o result/webssh_darwin_amd64 .
+# GOOS=darwin GOARCH=arm64 go build -ldflags "$LDFLAGS" -o result/webssh_darwin_arm64 .
 
-if [[ $# == 0 ]];then
-    cd result
+# if [[ $# == 0 ]];then
+#     cd result
 
-    UPLOAD_ITEM=($(ls -l|awk '{print $9}'|xargs -r))
+#     UPLOAD_ITEM=($(ls -l|awk '{print $9}'|xargs -r))
 
-    for ITEM in ${UPLOAD_ITEM[@]}
-    do
-        upload $ITEM
-    done
+#     for ITEM in ${UPLOAD_ITEM[@]}
+#     do
+#         upload $ITEM
+#     done
 
-    echo "upload completed!"
+#     echo "upload completed!"
 
-    cd $SHELL_PATH
+#     cd $SHELL_PATH
 
-    rm -rf result
-fi
+#     rm -rf result
+# fi
